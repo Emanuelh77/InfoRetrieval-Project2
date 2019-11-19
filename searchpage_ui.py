@@ -19,7 +19,7 @@ from collections import Counter as ctr
 #from numba import jit, cuda
 
 #import query_suggestions as qs
-#import candidate_resources_ranking as crr
+import candidate_resources_ranking as crr
 import suggestion
 
 LARGE_FONT = ("Verdana", 12)
@@ -66,19 +66,24 @@ class StartPage(tk.Frame):
         self.entry.grid(row=1, column=0, ipadx=50, padx=.75)
 
         search_button = ttk.Button(self, text="Search", command=self.input_handler)#lambda: controller.show_frame(SearchPage))
-        search_button.grid(row=1, column=1, padx=10)
+        search_button.grid(row=2, column=0, padx=10)
 
         #self.label2 = tk.Label(self)
         #self.label2.grid(row=2, column=0, padx=.75)
 
     def input_handler(self):
         query = self.entry.get()
-        # cand_res = crr.get_candidate_resources(query)
-        # top_five = crr.relevance_ranking(query, cand_res)
-        # i = 1
-        # for docID in top_five:
-        #     label = tk.Label(self, text=str(docID))
-        #     label.grid(row=1+i, column=0)
+        cand_res = crr.get_candidate_resources(query)
+        top_five = crr.relevance_ranking(query, cand_res)
+        i = 1
+
+        for docID in top_five:
+            snippet = crr.snippet(docID, query)
+            label = tk.Label(self, text=str(snippet[0]))
+            label.grid(row=1+i, column=1, sticky="w")
+            label2 = tk.Label(self, text= ' '.join(snippet[1:]))
+            label2.grid(row=2+i, column=1, sticky="w")
+            i+=2
 
 class Autocomplete(Entry):
     def __init__(self, *args, **kwargs):
