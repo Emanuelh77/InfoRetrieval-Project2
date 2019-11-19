@@ -53,10 +53,13 @@ def combine_recipies_ratings(recipies,ratings):
   try:
     for recipie in recipies.keys():
       for ID in recipies[recipie]:
-        if recipie in recipie_avgRating.keys():
-          recipie_avgRating[recipie].append(ratings[ID])
+        if ID not in ratings.keys():
+          recipie_avgRating.update({recipie : [0]})
         else:
-          recipie_avgRating.update({recipie : [ratings[ID]]})
+          if recipie in recipie_avgRating.keys():
+            recipie_avgRating[recipie].append(ratings[ID])
+          else:
+            recipie_avgRating.update({recipie : [ratings[ID]]})
   except:
     pass
 
@@ -72,9 +75,12 @@ def find_queries(query):
       cq.update({recipe : recipie_avgRating[recipe]})
 
   top5 = []
-  for i in range(5):
-    top5.append(max(cq, key=cq.get))
-    del cq[max(cq, key=cq.get)]
+  if (len(cq) <= 5):
+    return list(cq.keys())
+  else:
+    for i in range(5):
+      top5.append(max(cq, key=cq.get))
+      del cq[max(cq, key=cq.get)]
 
   return top5
 
