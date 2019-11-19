@@ -22,7 +22,7 @@ def process_recipies(filepath):
           recipie_IDs.update({recipie : [recipie_id]})
               
       except:
-        continue
+        pass
 
 def process_reviews(filepath):
   global recipieIDs_avgRating
@@ -41,7 +41,7 @@ def process_reviews(filepath):
           recipieIDs_avgRating.update({recipie_id : [rating]})
               
       except:
-        continue
+        pass
 
   for recipie in recipieIDs_avgRating.keys():
     recipieIDs_avgRating[recipie] = sum(recipieIDs_avgRating[recipie]) / len(recipieIDs_avgRating[recipie])
@@ -58,7 +58,7 @@ def combine_recipies_ratings(recipies,ratings):
         else:
           recipie_avgRating.update({recipie : [ratings[ID]]})
   except:
-    continue
+    pass
 
   for recipie in recipie_avgRating.keys():
     recipie_avgRating[recipie] = sum(recipie_avgRating[recipie]) / len(recipie_avgRating[recipie])
