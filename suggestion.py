@@ -11,7 +11,7 @@ import collections
 def process_recipies(filepath):
   global recipie_IDs
 
-  with open(filepath) as fp:
+  with open(filepath, encoding='utf8') as fp:
     for cnt, line in enumerate(fp):
       try:
         line = line.rstrip('\n')
@@ -25,12 +25,12 @@ def process_recipies(filepath):
           recipie_IDs.update({recipie : [recipie_id]})
               
       except:
-        print("bad recipie")
+        continue
 
 def process_reviews(filepath):
   global recipieIDs_avgRating
 
-  with open(filepath) as fp:
+  with open(filepath, encoding='utf8') as fp:
     for cnt, line in enumerate(fp):
       try:
         line = line.rstrip('\n')
@@ -44,7 +44,7 @@ def process_reviews(filepath):
           recipieIDs_avgRating.update({recipie_id : [rating]})
               
       except:
-        print("bad review")
+        continue
 
   for recipie in recipieIDs_avgRating.keys():
     recipieIDs_avgRating[recipie] = sum(recipieIDs_avgRating[recipie]) / len(recipieIDs_avgRating[recipie])
@@ -61,7 +61,7 @@ def combine_recipies_ratings(recipies,ratings):
         else:
           recipie_avgRating.update({recipie : [ratings[ID]]})
   except:
-    print("no review for recipie")
+    continue
 
   for recipie in recipie_avgRating.keys():
     recipie_avgRating[recipie] = sum(recipie_avgRating[recipie]) / len(recipie_avgRating[recipie])
@@ -90,4 +90,4 @@ process_reviews(r'RAW_interactions.csv')
 combine_recipies_ratings(recipie_IDs, recipieIDs_avgRating)
   
 def suggest(q):
-	return find-queries(q)
+	return find_queries(q)
