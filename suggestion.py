@@ -80,12 +80,14 @@ def find_queries(query):
     del cq[max(cq, key=cq.get)]
 
   return top5
+
+recipieIDs_avgRating = {}
+recipie_IDs = {}
+recipie_avgRating = {}
+
+process_recipies(r'RAW_recipes.csv')
+process_reviews(r'RAW_interactions.csv')
+combine_recipies_ratings(recipie_IDs, recipieIDs_avgRating)
   
-def suggestion():
-	recipieIDs_avgRating = {}
-	recipie_IDs = {}
-	recipie_avgRating = {}
-	
-	process_recipies(r'RAW_recipes.csv')
-	process_reviews(r'RAW_interactions.csv')
-	combine_recipies_ratings(recipie_IDs, recipieIDs_avgRating)
+def suggest(q):
+	return find-queries(q)
